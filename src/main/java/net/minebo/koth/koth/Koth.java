@@ -78,9 +78,7 @@ public class Koth {
             return DurationFormatUtils.formatDuration(millisLeft, "hh:mm:ss");
         }
 
-        // Show seconds with one decimal (e.g., 15.3s)
-        double seconds = millisLeft / 1000.0;
-        return String.format("%s", seconds);
+        return (capTime - capProgress) + "s";
     }
 
     public void start() {
