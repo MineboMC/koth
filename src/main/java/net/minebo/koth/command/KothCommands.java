@@ -244,6 +244,10 @@ public class KothCommands extends BaseCommand {
             return;
         }
 
+        if(KoTH.getInstance().autoKothTimer.isActive()) {
+            KoTH.getInstance().cancelAutoKoth();
+        }
+
         koth.start();
         sender.sendMessage(ColorUtil.translateColors("&aStarted KoTH &e" + koth.getName() + "&a!"));
     }

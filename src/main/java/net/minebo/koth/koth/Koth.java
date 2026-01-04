@@ -158,6 +158,16 @@ public class Koth {
                 );
                 Bukkit.getPluginManager().callEvent(progressEvent);
 
+                if (capProgress % 30 == 0 && capProgress > 0 && !(capProgress >= capTime)) {
+                    player.sendMessage(ColorUtil.translateColors("&6[KoTH] " + "&eYou &6are controlling &e" + name + "&6! &c(" + currentKoth.getRemaining() + ")"));
+
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (! p.getUniqueId().equals(player.getUniqueId())) {
+                            p.sendMessage(ColorUtil.translateColors("&6[KoTH] " + "&eSomeone" + " &6is controlling &e" + name + "&6! &c(" + currentKoth.getRemaining() + ")"));
+                        }
+                    }
+                }
+
                 int percentage = (capProgress * 100) / capTime;
                 capper.sendActionBar(ColorUtil.translateColors("&6You are controlling &e" + currentKoth.name + "&6! &7(&e" + percentage + "%&7)"));
 
