@@ -1,0 +1,7 @@
+koth:
+  default-cap-time: 300 # in seconds
+
+auto-koth:
+  enabled: true
+  delay: 60 # in seconds
+  player-requirement: 0

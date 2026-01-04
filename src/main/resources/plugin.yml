@@ -1,0 +1,8 @@
+name: KoTH
+version: '1.0-DEV'
+description: "Handles KoTH events."
+authors: ["Ian Rich"]
+website: "https://github.com/MineboMC/KingOfTheHill"
+main: net.minebo.koth.KoTH
+soft-depend: ["Apollo-Bukkit"]
+api-version: '1.20'
