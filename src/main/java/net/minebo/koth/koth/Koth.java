@@ -80,7 +80,7 @@ public class Koth {
 
         // Show seconds with one decimal (e.g., 15.3s)
         double seconds = millisLeft / 1000.0;
-        return String.format("%.1fs", seconds);
+        return String.format("%s", seconds);
     }
 
     public void start() {
