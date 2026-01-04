@@ -29,6 +29,11 @@ public class NextKothTimer extends GlobalTimer {
 
     @Override
     protected boolean onTick(int secondsLeft) {
+        if (Koth.currentKoth != null) {
+            cancel();
+            return false;
+        }
+
         if (secondsLeft % 60 == 0 || secondsLeft == 30 || secondsLeft == 10 || secondsLeft <= 5) {
 
             String timeFormat = formatTime(secondsLeft);
