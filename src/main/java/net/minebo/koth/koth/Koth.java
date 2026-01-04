@@ -138,6 +138,8 @@ public class Koth {
         capTask = new BukkitRunnable() {
             @Override
             public void run() {
+                if(cappingPlayer == null) return;
+
                 Player capper = Bukkit.getPlayer(cappingPlayer);
 
                 if (capper == null || ! capper.isOnline()) {
