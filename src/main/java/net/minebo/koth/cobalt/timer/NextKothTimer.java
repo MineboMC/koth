@@ -25,6 +25,8 @@ public class NextKothTimer extends GlobalTimer {
             KoTH.getInstance().scheduleNextAutoKoth();
             return;
         }
+
+        Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] &e" + Koth.nextKoth.getName() + " &6will be open in &e" + formatTime(durationSeconds) + " minutes&6!"));
     }
 
     @Override
@@ -32,17 +34,6 @@ public class NextKothTimer extends GlobalTimer {
         if (Koth.currentKoth != null) {
             cancel();
             return false;
-        }
-
-        if (secondsLeft % 60 == 0 || secondsLeft == 30 || secondsLeft == 10 || secondsLeft <= 5) {
-
-            String timeFormat = formatTime(secondsLeft);
-
-            Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] &e" + Koth.nextKoth.getName() + " &6will be open in &e" + timeFormat + "&6!"));
-
-            for (Player p :  Bukkit.getOnlinePlayers()) {
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.0f);
-            }
         }
 
         return true;
