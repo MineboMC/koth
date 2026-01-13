@@ -26,7 +26,7 @@ public class NextKothTimer extends GlobalTimer {
             return;
         }
 
-        Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] &e" + Koth.nextKoth.getName() + " &6will be open in &e" + formatTime(durationSeconds) + " minutes&6!"));
+        Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] &e" + Koth.nextKoth.getName() + " &6will be open in &e" + formatTime(durationSeconds) + "&6!"));
     }
 
     @Override
