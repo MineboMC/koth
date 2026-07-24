@@ -45,16 +45,18 @@ public class KoTH extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new KothListener(), this);
 
         if(Bukkit.getPluginManager().isPluginEnabled("Apollo-Bukkit")) {
-            getServer().getPluginManager().registerEvents(new LunarListener(), this);
-            EventBus.getBus().register(new LunarListener());
+            LunarListener lunarListener = new LunarListener();
+
+            getServer().getPluginManager().registerEvents(lunarListener, this);
+            EventBus.getBus().register(lunarListener);
         }
 
         // Register commands with ACF
         new ACFManager(this);
 
-        ACFCommandController.registerAll(this);
         ACFCommandController.registerCompletion("koths", new KothCompletionHandler());
         ACFCommandController.registerContext(Koth.class, new KothContextResolver());
+        ACFCommandController.registerAll(this);
 
         // Start auto koth timer if enabled
         if (getConfig().getBoolean("auto-koth.enabled", true)) {
@@ -74,10 +76,11 @@ public class KoTH extends JavaPlugin {
     }
 
     public void scheduleNextAutoKoth() {
-        int delay = getConfig().getInt("auto-koth.delay", 1000);
+        int delay = getConfig().getInt("auto-koth.delay", 20);
         int playerRequirement = getConfig().getInt("auto-koth.player-requirement", 0);
+        int delayBetweenKoths = getConfig().getInt("auto-koth.next-delay", 300);
 
-        nextKothTimer = new NextKothTimer(this);
+        nextKothTimer = new NextKothTimer(this, delayBetweenKoths);
         autoKothTimer = new AutoKothTimer(this, delay, playerRequirement);
         autoKothTimer.start();
     }

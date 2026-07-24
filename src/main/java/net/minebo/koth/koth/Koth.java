@@ -89,7 +89,7 @@ public class Koth {
         KothStartEvent startEvent = new KothStartEvent(this);
         Bukkit.getPluginManager().callEvent(startEvent);
 
-        Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] &e" + currentKoth.getName() + "&6 can now be contested!"));
+        Bukkit.broadcastMessage(ColorUtil.translateColors("<gold>[KoTH] <yellow>" + currentKoth.getName() + "<gold> can now be contested!"));
     }
 
     public void end(Player winner) {
@@ -105,16 +105,19 @@ public class Koth {
         Bukkit.getPluginManager().callEvent(endEvent);
 
         lastKoth = this;
-        currentKoth = null;
 
         if (winner != null) {
-            Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] " + winner.getDisplayName() + " &6has captured &e" + name + "&6!"));
+            Bukkit.broadcastMessage(ColorUtil.translateColors("<gold>[KoTH] " + winner.getDisplayName() + " <gold>has captured <yellow>" + name + "<gold>!"));
         } else {
-            Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] " + currentKoth.getName() + " &6has been terminated."));
+            Bukkit.broadcastMessage(ColorUtil.translateColors("<gold>[KoTH] " + currentKoth.getName() + " <gold>has been terminated."));
         }
 
+        currentKoth = null;
+
         // Schedule the next auto koth
-        KoTH.getInstance().scheduleNextAutoKoth();
+        if (KoTH.getInstance().getConfig().getBoolean("auto-koth.enabled", true)) {
+            KoTH.getInstance().getNextKothTimer().start();
+        }
     }
 
     public void startCapping(Player player) {
@@ -125,11 +128,11 @@ public class Koth {
         cappingPlayer = player.getUniqueId();
         capProgress = 0;
 
-        player.sendMessage(ColorUtil.translateColors("&6[KoTH] " + "&eYou &6are now controlling &e" + name + "&6!"));
+        player.sendMessage(ColorUtil.translateColors("<gold>[KoTH] " + "<yellow>You <gold>are now controlling <yellow>" + name + "<gold>!"));
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (! p.getUniqueId().equals(player.getUniqueId())) {
-                p.sendMessage(ColorUtil.translateColors("&6[KoTH] " + "&eSomeone" + " &6is controlling &e" + name + "&6!"));
+                p.sendMessage(ColorUtil.translateColors("<gold>[KoTH] " + "<yellow>Someone" + " <gold>is controlling <yellow>" + name + "<gold>!"));
             }
         }
 
@@ -147,7 +150,7 @@ public class Koth {
 
                 if (capper.getLocation().distance(midPoint) > capSize) {
                     stopCapping();
-                    capper.sendActionBar(ColorUtil.translateColors("&cYou left the capture zone!"));
+                    capper.sendActionBar(ColorUtil.translateColors("<red>You left the capture zone!"));
                     return;
                 }
 
@@ -159,20 +162,20 @@ public class Koth {
                 Bukkit.getPluginManager().callEvent(progressEvent);
 
                 if (capProgress % 30 == 0 && capProgress > 0 && !(capProgress >= capTime)) {
-                    player.sendMessage(ColorUtil.translateColors("&6[KoTH] " + "&eYou &6are controlling &e" + name + "&6! &c(" + currentKoth.getRemaining() + ")"));
+                    player.sendMessage(ColorUtil.translateColors("<gold>[KoTH] " + "<yellow>You <gold>are controlling <yellow>" + name + "<gold>! <red>(" + currentKoth.getRemaining() + ")"));
 
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (! p.getUniqueId().equals(player.getUniqueId())) {
-                            p.sendMessage(ColorUtil.translateColors("&6[KoTH] " + "&eSomeone" + " &6is controlling &e" + name + "&6! &c(" + currentKoth.getRemaining() + ")"));
+                            p.sendMessage(ColorUtil.translateColors("<gold>[KoTH] " + "<yellow>Someone" + " <gold>is controlling <yellow>" + name + "<gold>! <red>(" + currentKoth.getRemaining() + ")"));
                         }
                     }
                 }
 
                 int percentage = (capProgress * 100) / capTime;
-                capper.sendActionBar(ColorUtil.translateColors("&6You are controlling &e" + currentKoth.name + "&6! &7(&e" + percentage + "%&7)"));
+                capper.sendActionBar(ColorUtil.translateColors("<gold>You are controlling <yellow>" + currentKoth.name + "<gold>! <gray>(<yellow>" + percentage + "%<gray>)"));
 
                 if (capProgress >= capTime) {
-                    capper.sendActionBar(ColorUtil.translateColors("&6You have captured &e" + currentKoth.name + "&6!"));
+                    capper.sendActionBar(ColorUtil.translateColors("<gold>You have captured <yellow>" + currentKoth.name + "<gold>!"));
                     end(capper);
                 }
             }
@@ -187,7 +190,7 @@ public class Koth {
             capTask = null;
         }
 
-        Bukkit.broadcastMessage(ColorUtil.translateColors("&6[KoTH] " + "&6Control of &e" + currentKoth.name + "&6 lost!"));
+        Bukkit.broadcastMessage(ColorUtil.translateColors("<gold>[KoTH] " + "<gold>Control of <yellow>" + currentKoth.name + "<gold> lost!"));
 
         cappingPlayer = null;
         capProgress = 0;

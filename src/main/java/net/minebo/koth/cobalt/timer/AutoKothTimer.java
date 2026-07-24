@@ -40,8 +40,8 @@ public class AutoKothTimer extends GlobalTimer {
         if (onlinePlayers < playerRequirement) {
             if (secondsLeft % 300 == 0) { // Announce every 5 minutes
                 Bukkit.broadcastMessage(ColorUtil.translateColors(
-                    "&6&lKoTH &cdelayed - need at least &e" + playerRequirement + 
-                    " &cplayers online. &7(" + onlinePlayers + "/" + playerRequirement + ")"
+                    "<gold><bold>KoTH<reset> <red>delayed - need at least <yellow>" + playerRequirement +
+                    " <red>players online. <gray>(" + onlinePlayers + "/" + playerRequirement + ")"
                 ));
             }
             return true; // Keep waiting
@@ -63,8 +63,8 @@ public class AutoKothTimer extends GlobalTimer {
         int onlinePlayers = Bukkit.getOnlinePlayers().size();
         if (onlinePlayers < playerRequirement) {
             Bukkit.broadcastMessage(ColorUtil.translateColors(
-                "&6&lKoTH &cdelayed - need at least &e" + playerRequirement + 
-                " &cplayers online.&7(" + onlinePlayers + "/" + playerRequirement + ")"
+                "<gold><bold>KoTH <reset><red>delayed - need at least <yellow>" + playerRequirement +
+                " <red>players online.<gray>(" + onlinePlayers + "/" + playerRequirement + ")"
             ));
             // Restart the auto timer
             KoTH.getInstance().scheduleNextAutoKoth();
@@ -73,7 +73,7 @@ public class AutoKothTimer extends GlobalTimer {
 
         // Check if there are any KoTHs available
         if (Koth.koths.isEmpty()) {
-            Bukkit.broadcastMessage(ColorUtil.translateColors("&c&lError: &cNo KoTH arenas configured!"));
+            Bukkit.broadcastMessage(ColorUtil.translateColors("<red><bold>Error: <reset><red>No KoTH arenas configured!"));
             // Restart the auto timer
             KoTH.getInstance().scheduleNextAutoKoth();
             return;

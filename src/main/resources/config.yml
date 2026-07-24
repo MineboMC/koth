@@ -3,5 +3,6 @@ koth:
 
 auto-koth:
   enabled: true
-  delay: 60 # in seconds
+  delay: 20 # the amount of time after the plugin is loaded to schedule a koth
+  next-delay: 300 # time between a koth being won and the next koth
   player-requirement: 0

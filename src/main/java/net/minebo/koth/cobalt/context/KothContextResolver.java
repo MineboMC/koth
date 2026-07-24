@@ -12,7 +12,7 @@ public class KothContextResolver implements ContextResolver<Koth, BukkitCommandE
         String name = commandExecutionContext.popFirstArg();
         Koth koth = Koth.get(name);
         if (koth != null) return koth;
-        throw new InvalidCommandArgument("No koth matching " + name + " could be found.");
+        throw new InvalidCommandArgument("Error: No koth matching " + name + " could be found.");
     }
 
 }
